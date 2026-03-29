@@ -54,6 +54,7 @@ cycle = Cycle(Grafo)
 
 #Algoritmo de Johson
 
+#converter o grado do algs4 para o formato do networkx
 def algs4_to_nx_digraph(G_algs4):
     G_nx = nx.DiGraph()
     
