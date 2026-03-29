@@ -1,6 +1,7 @@
 from lista_adj import retornar_lista
 from algs4.graph import Graph
 from algs4.cc import CC  
+from algs4.cycle import Cycle
 from algs4.breadth_first_paths import BreadthFirstPaths
 
 # Perguntas que o programa deve responder
@@ -36,3 +37,17 @@ print("Componentes conexos:")
 for v in range(Grafo.V):
     print(f"Vértice {v} -> componente {cc.id[v]}")
 
+# calculkar distancia entre (0,0) e (2,2)
+def calcular_distancia(grafo, origem, destino):
+    bfs = BreadthFirstPaths(grafo, origem)
+    if not bfs.has_path_to(destino):
+        return -1
+    caminho = list(bfs.path_to(destino))
+    return len(caminho) - 1
+
+distancia = calcular_distancia(Grafo, 0, 8)
+print("A distância entre (0,0) e (2,2) é: " + str(distancia))
+
+cycle = Cycle(Grafo)
+
+# print(str(cycle.has_cycle())) 
