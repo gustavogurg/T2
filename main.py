@@ -55,3 +55,4 @@ if cycle.has_cycle == True:
     print("O grafo possui ciclo.")
 else:    
     print("O grafo não possui ciclo.") 
+
