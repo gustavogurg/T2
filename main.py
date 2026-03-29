@@ -3,6 +3,7 @@ from algs4.graph import Graph
 from algs4.cc import CC  
 from algs4.cycle import Cycle
 from algs4.breadth_first_paths import BreadthFirstPaths
+import networkx as nx
 
 # Perguntas que o programa deve responder
 
@@ -50,17 +51,28 @@ distancia = calcular_distancia(Grafo, 0, 8)
 print("A distância entre (0,0) e (2,2) é: " + str(distancia))
 
 cycle = Cycle(Grafo)
-# FALTA IMPLEMENTAR FUNÇÃO PARA ENCONTRAR CICLO E IMPRIMIR OS VÉRTICES DO CICLO ENCONTRADO
-def encontrar_ciclo(Grafo):
-    lista_ciclo = []
-    return lista_ciclo
-lista_ciclo = encontrar_ciclo(Grafo)
+
+#Algoritmo de Johson
+
+def algs4_to_nx_digraph(G_algs4):
+    G_nx = nx.DiGraph()
+    
+    for v in range(G_algs4.V):
+        for w in G_algs4.adj[v]:
+            G_nx.add_edge(v, w)
+    
+    return G_nx
+
+G_nx = algs4_to_nx_digraph(Grafo)
+
+lista_ciclo = list(nx.simple_cycles(G_nx))
 
 if cycle.has_cycle == True:
     print("O grafo possui ciclo.")
     print("Os ciclos encontrados são: " )
     for ciclo in lista_ciclo:
-        print(ciclo)
+        if len(ciclo) > 3:  # filtra size
+            print(ciclo)
 else:    
     print("O grafo não possui ciclo.") 
 
