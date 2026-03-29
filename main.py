@@ -51,4 +51,7 @@ print("A distância entre (0,0) e (2,2) é: " + str(distancia))
 
 cycle = Cycle(Grafo)
 
-print(cycle)
+if cycle.has_cycle == True:
+    print("O grafo possui ciclo.")
+else:    
+    print("O grafo não possui ciclo.") 
