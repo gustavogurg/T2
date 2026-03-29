@@ -18,7 +18,7 @@ lista, size = retornar_lista()
 Grafo = Graph(size**2)
 for i in range(len(lista)):
     for pos in lista[i]:
-        Grafo.add_edge(i, int(pos)-1)
+        Grafo.add_edge(i, (pos)-1)
 
 #printar lista de adjacências
 print("Lista de adjacências:")
@@ -50,9 +50,19 @@ distancia = calcular_distancia(Grafo, 0, 8)
 print("A distância entre (0,0) e (2,2) é: " + str(distancia))
 
 cycle = Cycle(Grafo)
+# FALTA IMPLEMENTAR FUNÇÃO PARA ENCONTRAR CICLO E IMPRIMIR OS VÉRTICES DO CICLO ENCONTRADO
+def encontrar_ciclo(Grafo):
+    lista_ciclo = []
+    return lista_ciclo
+lista_ciclo = encontrar_ciclo(Grafo)
 
 if cycle.has_cycle == True:
     print("O grafo possui ciclo.")
+    print("Os ciclos encontrados são: " )
+    for ciclo in lista_ciclo:
+        print(ciclo)
 else:    
     print("O grafo não possui ciclo.") 
+
+
 
