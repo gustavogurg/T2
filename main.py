@@ -43,6 +43,7 @@ def calcular_distancia(grafo, origem, destino):
     if not bfs.has_path_to(destino):
         return -1
     caminho = list(bfs.path_to(destino))
+    # print(caminho)
     return len(caminho) - 1
 
 distancia = calcular_distancia(Grafo, 0, 8)
@@ -50,4 +51,4 @@ print("A distância entre (0,0) e (2,2) é: " + str(distancia))
 
 cycle = Cycle(Grafo)
 
-# print(str(cycle.has_cycle())) 
+print(cycle)
