@@ -3,7 +3,6 @@ from algs4.graph import Graph
 from algs4.cc import CC  
 from algs4.cycle import Cycle
 from algs4.breadth_first_paths import BreadthFirstPaths
-import networkx as nx
 
 # Perguntas que o programa deve responder
 
@@ -50,29 +49,38 @@ def calcular_distancia(grafo, origem, destino):
 distancia = calcular_distancia(Grafo, 0, 8)
 print("A distância entre (0,0) e (2,2) é: " + str(distancia))
 
+#Ciclos
 cycle = Cycle(Grafo)
 
-#Algoritmo de Johson
+def encontrar_ciclos(G):
+    cycles = []
+    path = []
 
-#converter o grado do algs4 para o formato do networkx
-def algs4_to_nx_digraph(G_algs4):
-    G_nx = nx.DiGraph()
-    
-    for v in range(G_algs4.V):
-        for w in G_algs4.adj[v]:
-            G_nx.add_edge(v, w)
-    
-    return G_nx
+    def dfs(v, start):
+        path.append(v)
 
-G_nx = algs4_to_nx_digraph(Grafo)
+        for w in G.adj[v]:
+            if w == start:
+                cycles.append(path.copy())
+            elif w not in path and w > start:
+                dfs(w, start)
 
-lista_ciclo = list(nx.simple_cycles(G_nx))
+        path.pop()
+
+    for v in range(G.V):
+        dfs(v, v)
+
+    return cycles
+
+lista_ciclos = encontrar_ciclos(Grafo)
+resultado = list(dict.fromkeys(map(tuple, lista_ciclos)))
+
 
 if cycle.has_cycle == True:
     print("O grafo possui ciclo.")
     print("Os ciclos encontrados são: " )
-    for ciclo in lista_ciclo:
-        if len(ciclo) > 3:  # filtra size
+    for ciclo in resultado:
+        if len(ciclo) > 2:
             print(ciclo)
 else:    
     print("O grafo não possui ciclo.") 
