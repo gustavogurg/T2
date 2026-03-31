@@ -1,14 +1,14 @@
 """
-   Execution:    python graph.py input.txt
-   Dependencies: Bag.java Stack.java In.java StdOut.java
-   Data files:   https://algs4.cs.princeton.edu/41graph/tinyG.txt
-                 https://algs4.cs.princeton.edu/41graph/mediumG.txt
-                 https://algs4.cs.princeton.edu/41graph/largeG.txt
+   Execution:    python -m algs4.graph ../dataset/tinyG.txt
+   Dependencies: algs4.bag.Bag, sys
+   Data files:   ../dataset/tinyG.txt
+                 ../dataset/mediumG.txt
+                 ../dataset/largeG.txt
  
-   A graph, implemented using an array of sets.
+   A graph, implemented using an array of bags.
    Parallel edges and self-loops allowed.
  
-   % python graph.py < tinyG.txt
+   % python -m algs4.graph ../dataset/tinyG.txt
    13 vertices, 13 edges 
    0: 6 2 1 5 
    1: 0 
@@ -24,14 +24,14 @@
    11: 9 12 
    12: 11 9 
  
-   % python graph.py < mediumG.txt
+   % python -m algs4.graph ../dataset/mediumG.txt
    250 vertices, 1273 edges 
    0: 225 222 211 209 204 202 191 176 163 160 149 114 97 80 68 59 58 49 44 24 15 
    1: 220 203 200 194 189 164 150 130 107 72 
    2: 141 110 108 86 79 51 42 18 14 
    ...
  """
-from algs4.bag import Bag
+from bag import Bag
 
 
 class Graph:
@@ -39,15 +39,14 @@ class Graph:
     def __init__(self, v):
         self.V = v
         self.E = 0
-        self.adj = {}
-        for v in range(self.V):
-            self.adj[v] = Bag()
+        self.adj = [Bag() for _ in range(self.V)]
 
     def __str__(self):
-        s = "%d vertices, %d edges\n" % (self.V, self.E)
-        s += "\n".join("%d: %s" % (v, " ".join(str(w)
-                                               for w in self.adj[v])) for v in range(self.V))
-        return s
+        lines = ["%d vertices, %d edges" % (self.V, self.E)]
+        for v in range(self.V):
+            neighbors = " ".join(str(w) for w in self.adj[v])
+            lines.append("%d: %s" % (v, neighbors))
+        return "\n".join(lines)
 
     def add_edge(self, v, w):
         v, w = int(v), int(w)
@@ -56,11 +55,11 @@ class Graph:
         self.E += 1
 
     def degree(self, v):
-        return len(self.adj[v])
+        return self.adj[v].size()
 
     def max_degree(self):
         max_deg = 0
-        for v in self.V:
+        for v in range(self.V):
             max_deg = max(max_deg, self.degree(v))
         return max_deg
 
@@ -70,16 +69,16 @@ class Graph:
             for w in self.adj[v]:
                 if w == v:
                     count += 1
-        return count
+        return count // 2
 
 
 if __name__ == '__main__':
     import sys
-
-    V = int(sys.stdin.readline())
-    E = int(sys.stdin.readline())
+    f = open(sys.argv[1])
+    V = int(f.readline())
+    E = int(f.readline())
     g = Graph(V)
     for i in range(E):
-        v, w = sys.stdin.readline().split()
+        v, w = f.readline().split()
         g.add_edge(v, w)
     print(g)

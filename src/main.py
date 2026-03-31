@@ -1,9 +1,9 @@
-import sys
-sys.path.append("../algs4-py")
-from algs4.graph import Graph
-from algs4.cc import CC
-from algs4.breadth_first_paths import BreadthFirstPaths
-from algs4.cycle import Cycle
+import os
+from graph import Graph
+from cc import CC
+from bfs import BreadthFirstPaths
+from cycle import Cycle
+
 
 # Perguntas que o programa deve responder
 
