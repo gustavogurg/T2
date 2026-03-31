@@ -1,8 +1,9 @@
-from lista_adj import retornar_lista
+import sys
+sys.path.append("../algs4-py")
 from algs4.graph import Graph
-from algs4.cc import CC  
-from algs4.cycle import Cycle
+from algs4.cc import CC
 from algs4.breadth_first_paths import BreadthFirstPaths
+from algs4.cycle import Cycle
 
 # Perguntas que o programa deve responder
 
@@ -13,12 +14,13 @@ from algs4.breadth_first_paths import BreadthFirstPaths
 #     Se o grafo possuir ciclo, quais são os vértices de um ciclo encontrado?
 
 
-lista, size = retornar_lista()
-
-Grafo = Graph(size**2)
-for i in range(len(lista)):
-    for pos in lista[i]:
-        Grafo.add_edge(i, (pos)-1)
+with open("../dados/grafo.txt", "r") as f:
+    V = int(f.readline().strip())
+    E = int(f.readline().strip())
+    arestas = [tuple(map(int, line.strip().split())) for line in f]
+    Grafo = Graph(V)
+    for v, w in arestas:
+        Grafo.add_edge(v, w)
 
 #printar lista de adjacências
 print("Lista de adjacências:")

@@ -23,5 +23,23 @@ for i in range(size):
         lista.append(calc_posicoes(tabuleiro, i, j))
         # print(f"Posições para {tabuleiro[i][j]}: {calc_posicoes(tabuleiro, i, j)}")
 
-def retornar_lista():
-    return lista, size
+def exportar_lista():
+    arestas = []
+
+    for i in range(size):
+        for j in range(size):
+            origem = tabuleiro[i][j] - 1
+            destinos = calc_posicoes(tabuleiro, i, j)
+
+            for destino in destinos:
+                destino -= 1
+                if origem < destino:  # evita duplicação
+                    arestas.append((origem, destino))
+
+    with open("./grafo.txt", "w") as f:
+        f.write(f"{size*size}\n")          # V
+        f.write(f"{len(arestas)}\n")      # E
+        for v, w in arestas:
+            f.write(f"{v} {w}\n")
+
+exportar_lista()
