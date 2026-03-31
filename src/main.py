@@ -54,38 +54,13 @@ print("A distância entre (0,0) e (2,2) é: " + str(distancia))
 #Ciclos
 cycle = Cycle(Grafo)
 
-def encontrar_ciclos(G):
-    cycles = []
-    path = []
-
-    def dfs(v, start):
-        path.append(v)
-
-        for w in G.adj[v]:
-            if w == start:
-                cycles.append(path.copy())
-            elif w not in path and w > start:
-                dfs(w, start)
-
-        path.pop()
-
-    for v in range(G.V):
-        dfs(v, v)
-
-    return cycles
-
-lista_ciclos = encontrar_ciclos(Grafo)
-resultado = list(dict.fromkeys(map(tuple, lista_ciclos)))
-
-
-if cycle.has_cycle == True:
+if cycle.has_cycle: 
     print("O grafo possui ciclo.")
-    print("Os ciclos encontrados são: " )
-    for ciclo in resultado:
-        if len(ciclo) > 2:
-            print(ciclo)
-else:    
-    print("O grafo não possui ciclo.") 
-
-
-
+    print("Análise de Complexidade: Tempo O(V + E) e Espaço O(V).") # Exigência da Q4
+    
+    print("\nOs vértices de um ciclo encontrado são:")
+    caminho_ciclo = cycle.get_cycle()
+    print(" -> ".join(map(str, caminho_ciclo)))
+else:
+    print("O grafo não possui ciclo.")
+    print("Análise de Complexidade: Tempo O(V + E) e Espaço O(V).")
