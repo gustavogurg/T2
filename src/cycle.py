@@ -20,40 +20,34 @@
 from graph import Graph
 
 class Cycle:
+
     def __init__(self, G):
         self.marked = [False for _ in range(G.V)]
-        # --- ADICIONADO ---
-        self.edge_to = [None for _ in range(G.V)]
-        self._cycle = None
-        # ------------------
-        self._has_cycle = False # Renomeado internamente para não conflitar com o método
+        self.has_cycle = False
         for s in range(G.V):
             if not self.marked[s]:
                 self.dfs(G, s, s)
 
-    # --- ADICIONADO: Método que a sua Main chama na Questão 4 ---
-    def has_cycle(self):
-        return self._has_cycle
-
-    # --- ADICIONADO: Método que a sua Main chama na Questão 5 ---
-    def cycle(self):
-        return self._cycle
-
     def dfs(self, G, v, u):
         self.marked[v] = True
         for w in G.adj[v]:
-            if self._cycle is not None: return
-            
             if not self.marked[w]:
-                self.edge_to[w] = v # ADICIONADO
                 self.dfs(G, w, v)
             elif w != u:
-                self._has_cycle = True # ADICIONADO
-                # --- ADICIONADO: Reconstrói o caminho do ciclo ---
-                self._cycle = []
-                x = v
-                while x != w:
-                    self._cycle.append(x)
-                    x = self.edge_to[x]
-                self._cycle.append(w)
-                self._cycle.append(v)
+                self.has_cycle = True
+
+
+if __name__ == "__main__":
+    import sys
+    f = open(sys.argv[1])
+    V = int(f.readline())
+    E = int(f.readline())
+    g = Graph(V)
+    for i in range(E):
+        v, w = f.readline().split()
+        g.add_edge(v, w)
+    cycle = Cycle(g)
+    if cycle.has_cycle:
+        print("Graph is cyclic")
+    else:
+        print("Graph is acyclic")
